@@ -92,7 +92,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             pos.setLongitud(Double.parseDouble(longitud.getText().toString()));
 
             pos.setNombreSitio("");
-            Toast.makeText(this, pos.getLatitud() + " - " + pos.getLongitud(), Toast.LENGTH_LONG).show();
             Firebase bdObject = new Firebase(BdUtil.FIREBASE_URL);
             bdObject.child("Posicion").setValue(pos);
             bdObject.addValueEventListener(new ValueEventListener() {
@@ -111,6 +110,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         longIn = pos.getLongitud();
                         URL = URL.replace("{lat_dest}", String.valueOf(pos.getLatitud()));
                         URL = URL.replace("{long_dest}", String.valueOf(pos.getLongitud()));
+                        Toast.makeText(MapsActivity.this,"Coordenadas obtenidas de firebase \n"+" Latitud: "+ pos.getLatitud() + "\nLongitud: " + pos.getLongitud()+"\nCalculando ruta....", Toast.LENGTH_LONG).show();
+
                         //Displaying it on textview
                     }
                     appState = 1;
@@ -344,7 +345,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mMap.addPolyline(lineOptions);
             } else {
-                Toast.makeText(MapsActivity.this, "Las coordenadas ingresadas no arrojaron resultados", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsActivity.this, "No hay una ruta entre su ubicación y las coordenadas ingresadas", Toast.LENGTH_LONG).show();
 
                 Log.d("onPostExecute", "without Polylines drawn");
             }
